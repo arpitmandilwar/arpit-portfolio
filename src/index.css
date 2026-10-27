@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (Tailwind v4 theme) ---------- */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Lighter navy surfaces (easier to read than near-black) */
+  --color-ink-950: #111827;
+  --color-ink-900: #1a2336;
+  --color-ink-800: #222d44;
+  --color-ink-700: #2c3a57;
+
+  /* Brighter greys: every text-slate-* class in the site picks these up */
+  --color-slate-200: #f1f5f9;
+  --color-slate-300: #e2e8f0;
+  --color-slate-400: #cbd5e1;
+  --color-slate-500: #a8b5c7;
+  --color-slate-600: #8493a8;
+
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+}
+
+/* ---------- Base styles ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-ink-950);
+    color: #e2e8f0;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  :focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: rgba(139, 92, 246, 0.45);
+    color: #fff;
+  }
+}
+
+/* ---------- Reusable component classes ---------- */
+@layer components {
+  .gradient-text {
+    background-image: linear-gradient(90deg, #7dd3fc, #c4b5fd, #67e8f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, filter 0.2s ease, background-color 0.2s ease,
+      border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background-image: linear-gradient(135deg, #2563eb, #7c3aed);
+    box-shadow: 0 8px 30px -10px rgba(124, 58, 237, 0.7);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+  }
+
+  .btn-outline {
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+  .btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(34, 211, 238, 0.7);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    color: #f1f5f9;
+  }
+  .btn-ghost:hover {
+    color: #67e8f9;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  }
+
+  /* Scroll-reveal. The failsafe animation guarantees the content
+     becomes visible after 1.2s even if the observer never fires. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    animation: reveal-failsafe 0.01s linear 1.2s forwards;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Respect "reduce motion" ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
