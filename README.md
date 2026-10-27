@@ -2,7 +2,7 @@
 
 A responsive personal portfolio website for Arpit Mandilwar, a MERN Stack and Full Stack Developer.
 
-**Live site:** _add your deployed URL here after deployment_
+**Live site:** https://arpit-portfolio-sigma-ten.vercel.app/
 
 ## Tech stack
 
